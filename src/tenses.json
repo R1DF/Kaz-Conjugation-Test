@@ -1,0 +1,48 @@
+{
+  "tensesList": [
+    "Continuous",
+    "Present",
+    "Past Simple",
+    "Future Motivative",
+    "Future Potential",
+    "Past Obvious",
+    "Past Uncertain"
+  ],
+  "tensesConjugations": {
+    "continuous": {
+      "suffixes": [
+        "а", "е", "й"
+      ],
+      "endings": [
+        ["", ""],
+        ["", ""],
+        ["", ""],
+        ["", ""],
+        ["", ""],
+        ["", ""],
+        ["", ""],
+        ["", ""]
+      ]
+    }
+  },
+  "pronounsList": [
+    "мен",
+    "сен",
+    "сіз",
+    "ол",
+    "біз",
+    "сендер",
+    "сіздер",
+    "олар"
+  ],
+  "pronounsDescriptions": [
+    "1st person singular",
+    "2nd person informal singular",
+    "2nd person formal singular",
+    "3rd person singular",
+    "1st person plural",
+    "2nd person informal plural",
+    "2nd person formal plural",
+    "3rd person plural"
+  ]
+}
