@@ -38,7 +38,13 @@ def make(tense_number, pronoun_number):
             pass
         case _:
             return
-
+    tense.set_infinitive()
+    tense.conjugate()
+    clear()
+    print(f"{tense.name.upper()}\n{tense.description}\n\nSENTENCE:")
+    tense.print_sentence()
+    print(f"\nPronoun: {tense.pronoun}\nInfinitive: {tense.infinitive}\nConjugated: {tense.conjugated}\n\n")
+    input("Press Enter to Exit.")
 
 # Main function
 def main():
@@ -58,7 +64,7 @@ def main():
         selected_pronoun = try_input("Enter desired pronoun to conjugate", (1, 8))
 
         # Running test maker
-        make(selected_pronoun, selected_tense)
+        make(selected_tense, selected_pronoun)
 
 # Running
 if __name__ == "__main__":
