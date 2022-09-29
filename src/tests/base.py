@@ -17,6 +17,8 @@ class BaseTense:
         self.infinitive = None  # Must be set separately
         self.conjugated = None  # Is changed internally
         self.pronoun_number = pronoun_number  # varies by pronoun
+        self.suffixes = []
+        self.endings = []
 
         # JSON data
         self.conjugation_data = conjugation_data
@@ -30,13 +32,57 @@ class BaseTense:
         self.infinitive = random.choice(self.verbs_list)
         self.conjugated = None  # always gets reset even after the verb changes
 
-    def set_pronoun(self, number, singular_or_plural):
-        # 1 for first person, 2 for second person informal, 3 for second person formal, and 4 for third person
-        pass
+    def get_suffixes(self, tense_name):
+        """Sets suffixes depending on the tense name."""
+        self.suffixes = self.conjugation_data["tensesConjugations"][tense_name]["suffixes"]
 
-    def detect_verb_type(self):
-        """This function will detect whether a verb is soft or hard based on its last vowel."""
-        pass
+    def get_endings(self, tense_name):
+        """Sets endings depending on the tense name."""
+        self.endings = self.conjugation_data["tensesConjugations"][tense_name]["endings"]
+
+    def detect_vowel_type(self, vowel):
+        """Returns the type of the vowel. Simplest detector."""
+        soft_vowels = self.conjugation_data["vowels"]["soft"]
+        return "soft" if vowel.upper() in soft_vowels else "hard"
+
+    def negate(self):
+        """Will negate the verb inside."""
+        # if self.detect_letter_type(len(self.infinitive) - 1) != "consonant":
+            # self.infinitive = self.infinitive[:-1] +
+
+    def is_vowel(self, letter):
+        """Returns if the letter given is a vowel or not."""
+        return letter.upper() in self.conjugation_data["vowels"]["soft"] + self.conjugation_data["vowels"]["hard"]
+
+    def detect_letter_type(self, letter_index):
+        """If the letter of the verb is a vowel, it returns the vowel type: "soft" or "hard".
+        If it's a consonant, it returns "consonant".
+        If the infinitive isn't set, it returns None."""
+        if self.infinitive is None:
+            return
+
+        letter = self.infinitive[letter_index]
+        if self.is_vowel(letter):
+            return self.detect_vowel_type(letter)
+        return "consonant"
+
+    def detect_last_vowel_type(self):
+        """
+        Returns the type of the last vowel in the infinitive. if the infinitive is None, None is returned.
+        """
+        if self.infinitive is None:
+            return
+
+        for letter_index in range(len(self.infinitive) - 2, 0, -1):
+            if self.is_vowel(self.infinitive[letter_index]):
+                return self.detect_letter_type(letter_index)
+
+    def print_sentence(self):
+        """This function will print out the sentence to the screen that contains the pronoun and conjugated verb.
+        if the verb hasn't been set or conjugated, nothing happens."""
+        if self.infinitive is None or self.conjugated is None:
+            return
+        print(self.pronoun.capitalize() + " " + self.conjugated + ".")
 
     def conjugate(self):
         """This function must be overridden by child classes."""
