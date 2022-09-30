@@ -3,8 +3,8 @@ from .base import BaseTense
 
 # Continuous Tense class
 class ContinuousTense(BaseTense):
-    def __init__(self, pronoun_number):
-        BaseTense.__init__(self, pronoun_number)  # Inheritance
+    def __init__(self, pronoun_number, is_negated):
+        BaseTense.__init__(self, pronoun_number, is_negated)  # Inheritance
         self.name = "Continuous Tense"
         self.description = "Used for either actions to happen in the future or for actions that happen regularly (similar to English present)."
 
@@ -19,7 +19,7 @@ class ContinuousTense(BaseTense):
 
         # Finding correct suffix
         penultimate_letter_type = self.detect_letter_type(-2)
-        determinant = {"hard": 0, "soft": 1}[self.detect_last_vowel_type()] # powerful line that gives an index on applied occasions
+        determinant = {"hard": 0, "soft": 1}[self.detect_last_vowel_type()]  # powerful line that gives an index on applied occasions
         match penultimate_letter_type:
             case "consonant":
                 suffix_index = determinant
