@@ -8,10 +8,11 @@ from data_getter import verbs_list
 
 # Base for every Tense class
 class BaseTense:
-    def __init__(self, pronoun_number):
+    def __init__(self, pronoun_number, is_negated=False):
         # Metadata
         self.name = None
         self.description = None
+        self.is_negated = is_negated
 
         # Grammatical structure
         self.infinitive = None  # Must be set separately
@@ -28,8 +29,11 @@ class BaseTense:
         self.pronoun = self.conjugation_data["pronounsList"][self.pronoun_number - 1]
 
     def set_infinitive(self):
-        """This function grabs a random infinitive from the verbs.json file in /src/."""
+        """This function grabs a random infinitive from the verbs.json file in /src/.
+         will negate the infinitive automatically if the is_negated boolean is True."""
         self.infinitive = random.choice(self.verbs_list)
+        if self.is_negated:
+            self.negate()
         self.conjugated = None  # always gets reset even after the verb changes
 
     def get_suffixes(self, tense_name):
@@ -42,13 +46,45 @@ class BaseTense:
 
     def detect_vowel_type(self, vowel):
         """Returns the type of the vowel. Simplest detector."""
+        if not self.is_vowel(vowel):
+            return  # Checking if the consonant is actually a vowel
+
         soft_vowels = self.conjugation_data["vowels"]["soft"]
         return "soft" if vowel.upper() in soft_vowels else "hard"
 
+    def detect_consonant_type(self, consonant):
+        """Returns the type of the consonant. Similar to self.detect_vowel_type."""
+        if self.is_vowel(consonant):
+            return  # Checking if the consonant is actually a consonant
+
+        consonants = self.conjugation_data["consonants"]
+        if consonant in consonants["sonorant"]:
+            return "sonorant"
+        elif consonant in consonants["voiced"]:
+            return "voiced"
+        else:
+            return "voiceless"
+
     def negate(self):
         """Will negate the verb inside."""
-        # if self.detect_letter_type(len(self.infinitive) - 1) != "consonant":
-            # self.infinitive = self.infinitive[:-1] +
+
+        # First we must check if the penultimate letter is a vowel or not
+        if self.is_vowel(self.infinitive[-2]):
+            ending_index = 0
+        else:
+            if self.infinitive[-2].upper() in self.conjugation_data["negationSuffixes"]["M"]:
+                ending_index = 0
+            elif self.infinitive[-2].upper() in self.conjugation_data["negationSuffixes"]["P"]:
+                ending_index = 1
+            else:
+                ending_index = 2
+
+        # Using string properties to transform the infinitive
+        self.infinitive = self.infinitive[:-1] + self.conjugation_data["negationEndings"][ending_index][{"hard": 0, "soft": 1}[self.detect_last_vowel_type()]] + "у"
+
+        # Checking if the conjugated form is outdated, becomes None if it is
+        if self.conjugated is not None:
+            self.conjugated = None
 
     def is_vowel(self, letter):
         """Returns if the letter given is a vowel or not."""
