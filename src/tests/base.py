@@ -65,7 +65,7 @@ class BaseTense:
         else:
             return "voiceless"
 
-    def negate(self):
+    def negate(self, reset=True):
         """Will negate the verb inside."""
 
         # First we must check if the penultimate letter is a vowel or not
@@ -83,7 +83,7 @@ class BaseTense:
         self.infinitive = self.infinitive[:-1] + self.conjugation_data["negationEndings"][ending_index][{"hard": 0, "soft": 1}[self.detect_last_vowel_type()]] + "у"
 
         # Checking if the conjugated form is outdated, becomes None if it is
-        if self.conjugated is not None:
+        if self.conjugated is not None and reset:
             self.conjugated = None
 
     def is_vowel(self, letter):
