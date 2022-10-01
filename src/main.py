@@ -10,6 +10,7 @@ https://github.com/R1DF/Kaz-Declension-Test/
 import os
 from data_getter import tenses_file_data
 from tests.continuous import ContinuousTense
+from tests.present import PresentTense
 from tests.past_simple import PastSimpleTense
 
 # Predefined functions
@@ -44,7 +45,9 @@ def make(tense_number, pronoun_number, is_negated):
         case 1:
             tense = ContinuousTense(pronoun_number, is_negated)
         case 2:
-            pass
+            print("\n\nThis tense takes 2 forms! Select one.\n1. Simple present tense\n2. Complex present tense")
+            form = "simple" if try_input("Select tense", (1, 2)) == 1 else "complex"
+            tense = PresentTense(pronoun_number, is_negated, form)
         case 3:
             tense = PastSimpleTense(pronoun_number, is_negated)
         case _:
