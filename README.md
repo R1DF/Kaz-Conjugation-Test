@@ -18,7 +18,7 @@ Represents an action which might or might not happen in the future.
 Represents an action that the speaker is absolutely confident happened, such as being a witness.
 7. **Past Uncertain**<br>
 Represents an action that the speaker is unsure whether it actually happened.
-8. **Past Continuous**
+8. **Past Continuous**<br>
 Represents actions in the past that have happened regularly or repeat.<br><br>
 
 For more information, you can Google tenses individually or check [this website](https://kaz-tili.kz/glag.htm) out if you know Russian.
