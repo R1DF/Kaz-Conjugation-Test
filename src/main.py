@@ -12,6 +12,11 @@ from data_getter import tenses_file_data
 from tests.continuous import ContinuousTense
 from tests.present import PresentTense
 from tests.past_simple import PastSimpleTense
+from tests.future_motivative import FutureMotivativeTense
+from tests.future_potential import FuturePotentialTense
+from tests.past_obvious import PastObviousTense
+from tests.past_uncertain import PastUncertainTense
+from tests.past_continuous import PastContinuousTense
 
 # Predefined functions
 def clear():
@@ -50,8 +55,19 @@ def make(tense_number, pronoun_number, is_negated):
             tense = PresentTense(pronoun_number, is_negated, form)
         case 3:
             tense = PastSimpleTense(pronoun_number, is_negated)
+        case 4:
+            tense = FutureMotivativeTense(pronoun_number, is_negated)
+        case 5:
+            tense = FuturePotentialTense(pronoun_number, is_negated)
+        case 6:
+            tense = PastObviousTense(pronoun_number, is_negated)
+        case 7:
+            tense = PastUncertainTense(pronoun_number, is_negated)
+        case 8:
+            tense = PastContinuousTense(pronoun_number, is_negated)
         case _:
             return
+
     clear()
     tense.set_infinitive()
     tense.conjugate()
@@ -71,12 +87,12 @@ def main():
         print("Kazakh Conjugation Test\nPlease enter a random tense you would like to conjugate in. The verb will be assigned randomly.\n")
         for tense_index in range(len(tenses_file_data["tensesList"])):
             print(f"{tense_index + 1}. {tenses_file_data['tensesList'][tense_index]}")
-        print("8. Quit")
-        selected_tense = try_input("Enter tense by number", (1, 8))
+        print("9. Quit")
+        selected_tense = try_input("Enter tense by number", (1, 9))
         print("\n")  # line breaks
 
         # Checking if the user wanted to quit
-        if selected_tense == 8:
+        if selected_tense == 9:
             clear()
             quit()
 
